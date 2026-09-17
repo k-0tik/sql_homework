@@ -1,0 +1,6 @@
+CREATE DATABASE "Music"
+\c "Music"
+CREATE TABLE IF NOT EXISTS "Musician" (
+  "MusicianID" SERIAL PRIMARY KEY, 
+  "Musician_name" VARCHAR(50) NOT NULL
+);
