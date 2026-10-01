@@ -4,3 +4,23 @@ CREATE TABLE IF NOT EXISTS "Musician" (
   "MusicianID" SERIAL PRIMARY KEY, 
   "Musician_name" VARCHAR(50) NOT NULL
 );
+CREATE TABLE IF NOT EXISTS "Genre" (
+  "GenreID" SERIAL PRIMARY KEY, 
+  "Genre_name" VARCHAR(50) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "Albums" (
+  "AlbumID" SERIAL PRIMARY KEY, 
+  "Album_name" VARCHAR(50) NOT NULL,
+  "Release year" INTEGER
+);
+CREATE TABLE IF NOT EXISTS "Songs" (
+  "SongID" SERIAL PRIMARY KEY, 
+  "Song_name" VARCHAR(50) NOT NULL,
+  "Song_duration" INTEGER,
+  "Album_name" VARCHAR(50) REFERENCES "Album_name"
+);
+CREATE TABLE IF NOT EXISTS "Musician_Genre" (
+  "MusicianID" INTEGER REFERENCES "MusicianID", 
+  "GenreID" INTEGER REFERENCES "GenreID"
+);
+
