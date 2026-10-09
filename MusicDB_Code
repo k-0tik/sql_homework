@@ -1,6 +1,4 @@
-CREATE DATABASE "Music"
-\c "Music"
-CREATE TABLE IF NOT EXISTS "Musician" (
+CREATE table if not EXISTS "Musician" (
   "MusicianID" SERIAL PRIMARY KEY, 
   "Musician_name" VARCHAR(50) NOT NULL
 );
@@ -17,10 +15,25 @@ CREATE TABLE IF NOT EXISTS "Songs" (
   "SongID" SERIAL PRIMARY KEY, 
   "Song_name" VARCHAR(50) NOT NULL,
   "Song_duration" INTEGER,
-  "Album_name" VARCHAR(50) REFERENCES "Album_name"
+  "AlbumID" INTEGER NOT NULL REFERENCES "Albums"("AlbumID")
+);
+CREATE TABLE IF NOT EXISTS "Collection" (
+  "CollectionID" SERIAL PRIMARY KEY, 
+  "Collection_name" VARCHAR(50) NOT NULL,
+  "Release year" INTEGER
 );
 CREATE TABLE IF NOT EXISTS "Musician_Genre" (
-  "MusicianID" INTEGER REFERENCES "MusicianID", 
-  "GenreID" INTEGER REFERENCES "GenreID"
+  "MusicianID" INTEGER REFERENCES "Musician"("MusicianID"), 
+  "GenreID" INTEGER REFERENCES "Genre"("GenreID"),
+  CONSTRAINT "PK_Musician_Genre" PRIMARY KEY ("GenreID", "MusicianID")
 );
-
+CREATE TABLE IF NOT EXISTS "Musicians_Albums" (
+  "MusicianID" INTEGER REFERENCES "Musician"("MusicianID"), 
+  "AlbumID" INTEGER REFERENCES "Albums"("AlbumID"),
+  CONSTRAINT "PK_Musicians_Albums" PRIMARY KEY ("MusicianID", "AlbumID")
+);
+CREATE TABLE IF NOT EXISTS "Collections_of_Songs" (
+  "SongID" INTEGER REFERENCES "Songs"("SongID"), 
+  "CollectionID" INTEGER REFERENCES "Collection"("CollectionID"),
+  CONSTRAINT "PK_Collections_of_Songs" PRIMARY KEY ("SongID", "CollectionID")
+)
